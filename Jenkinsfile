@@ -2,10 +2,7 @@ pipeline {
     agent any
     environment {
         registryUrl = "hidpdeveastusbotacr.azurecr.io"
-        def passw = sh (
-                         script: 'echo "Z2hwX2lrOXFVaWVvVERaRWk0ZkZSeWgyTlZFWmtzdnJ4UDFQcERSaw==" | base64 -d',
-                            returnStdout: true
-                         ).trim()
+        
         }
     
     
@@ -56,7 +53,7 @@ pipeline {
                         //sh "mkdir -p $WORKSPACE/test"
                         //sh "cd $WORKSPACE/test"
                         checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], gitTool: 'Default', userRemoteConfigs: [[credentialsId: 'test-tken-v', url: 'https://github.com/venkateshmuddusetty/test.git']]])
-                    sh "  git clone https://${passw}@github.com/venkateshmuddusetty/test.git"
+                     // sh "  git clone https://${passw}@github.com/venkateshmuddusetty/test.git"
                     }
                }
             stage( 'Update to AKS repo') {
