@@ -53,7 +53,7 @@ pipeline {
                         //sh "mkdir -p $WORKSPACE/test"
                         //sh "cd $WORKSPACE/test"
                         checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], gitTool: 'Default', userRemoteConfigs: [[credentialsId: 'test-tken-v', url: 'https://github.com/venkateshmuddusetty/test.git']]])
-                  //    sh "  git clone https://${passw}@github.com/venkateshmuddusetty/test.git"
+                      sh "  git clone https://${passw}@github.com/venkateshmuddusetty/test.git"
                     }
                }
             stage( 'Update to AKS repo') {
@@ -67,7 +67,7 @@ pipeline {
                             sh 'git config --global user.name "venkateshmuddusetty"'
                             sh 'git config --global user.email "venkat149dev@gmail.com"'
                             withCredentials([usernamePassword(credentialsId: 'test-tken-v', passwordVariable: 'password', usernameVariable: 'username')]) {
-                                sh 'git remote set-url origin https://venkateshmuddusetty:${password}@github.com/venkateshmuddusetty/test.git'
+                               sh 'git remote set-url origin https://venkateshmuddusetty:${password}@github.com/venkateshmuddusetty/test.git'
                              }
                             sh "git add ."
                             sh "git status"
