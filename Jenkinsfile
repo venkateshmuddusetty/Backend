@@ -24,7 +24,7 @@ pipeline {
                         
                         
                         if( "${datas.Build_tool}" == "maven" ) 
-                        sh 'mvn clean install- -DskipTests=True'
+                        sh 'mvn clean install -DskipTests=True'
                         
                         else( "${datas.Build_tool}" == "gradle" ) 
                             sh 'gradle build'
