@@ -12,7 +12,7 @@ pipeline {
         stages {
           stage( 'Gitcheckout') {
                 steps {
-                    checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'test-tken-v', url: '']]])
+                 //   checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'test-tken-v', url: '']]])
                     echo "test"
                 }
             }  
