@@ -54,8 +54,12 @@ pipeline {
                 steps {
                         sh 'rm -rf *'
                      withCredentials([usernamePassword(credentialsId: 'test-tken-v', passwordVariable: 'password', usernameVariable: 'username')]) {
-                      sh "  git clone https://${password}@github.com/venkateshmuddusetty/test.git"
-                         sh ''' cd test/
+                      sh '''  
+                      git config --global user.name "${username}"
+                      git config --global user.email "venkat149dev@gmail.com"
+                      git clone https://${password}@github.com/venkateshmuddusetty/test.git
+                         cd test/
+                         git remote set-url origin https://venkateshmuddusetty:${password}@github.com/venkateshmuddusetty/test.git
                              cp -r /opt/k8s_deploy/deployment.yml ${WORKSPACE}/test/deployment.yml
                             cat deployment.yml
                             sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" deployment.yml
