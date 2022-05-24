@@ -66,7 +66,8 @@ pipeline {
                          cp -r /opt/k8s_deploy/deployment.yml .
                          git status
                          cat deployment.yml
-                         sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" deployment.yml
+                         sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" ${WORKSPACE}/test/deployment.yml
+                         cat deployment.yml
                          git add .
                          git commit -m "Build_number"
                          git push -u origin '''
