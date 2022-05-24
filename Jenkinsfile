@@ -53,12 +53,15 @@ pipeline {
             stage( 'Login to AKS repo') {
                 steps {
                         sh 'rm -rf *'
-                    
-                        //sh "mkdir -p $WORKSPACE/test"
-                        //sh "cd $WORKSPACE/test"
-                       // checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], gitTool: 'Default', userRemoteConfigs: [[credentialsId: 'test-tken-v', url: 'https://github.com/venkateshmuddusetty/test.git']]])
                      withCredentials([usernamePassword(credentialsId: 'test-tken-v', passwordVariable: 'password', usernameVariable: 'username')]) {
                       sh "  git clone https://${password}@github.com/venkateshmuddusetty/test.git"
+                         sh ''' cd test/
+                             cp -r /opt/k8s_deploy/deployment.yml ${WORKSPACE}/test/deployment.yml
+                            cat deployment.yml
+                            sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" deployment.yml
+                            git add .
+                            git commit -m "Build_number"
+                            git push -u origin '''
                      } 
                     }
                }
