@@ -56,19 +56,19 @@ pipeline {
                     
                         //sh "mkdir -p $WORKSPACE/test"
                         //sh "cd $WORKSPACE/test"
-                        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], gitTool: 'Default', userRemoteConfigs: [[credentialsId: 'test-tken-v', url: 'https://github.com/venkateshmuddusetty/test.git']]])
-                   /*   withCredentials([usernamePassword(credentialsId: 'test-tken-v', passwordVariable: 'password', usernameVariable: 'username')]) {
+                       // checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], gitTool: 'Default', userRemoteConfigs: [[credentialsId: 'test-tken-v', url: 'https://github.com/venkateshmuddusetty/test.git']]])
+                     withCredentials([usernamePassword(credentialsId: 'test-tken-v', passwordVariable: 'password', usernameVariable: 'username')]) {
                       sh "  git clone https://${password}@github.com/venkateshmuddusetty/test.git"
-                     } */
+                     } 
                     }
                }
             stage( 'Update to AKS repo') {
                 steps {
                         sh '''
                             set -e
-                             cp -r /opt/k8s_deploy/deployment.yml ${WORKSPACE}/deployment.yml
+                             cp -r /opt/k8s_deploy/deployment.yml ${WORKSPACE}/test/deployment.yml
                             cat deployment.yml
-                            sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" deployment.yml
+                            sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" test/deployment.yml
                             '''
                             
                             withCredentials([usernamePassword(credentialsId: 'test-tken-v', passwordVariable: 'password', usernameVariable: 'username')]) {
