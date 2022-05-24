@@ -34,7 +34,7 @@ pipeline {
             }
             stage( 'Build docker image') {
                 steps {
-                    sh 'docker build -t hello:latest .'
+                    sh "docker build -t hello:${BUILD_NUMBER} ."
                     
                 }
                 
