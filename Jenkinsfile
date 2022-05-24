@@ -20,11 +20,14 @@ pipeline {
                         echo "build type is: ${datas.Build_tool}"
                         
                         
-                        if( "${datas.Build_tool}" == "maven" ) 
+                        if( "${datas.Build_tool}" == "maven" )
+                        {
                         sh 'mvn clean install -DskipTests=True'
-                        
+                        }
                         else( "${datas.Build_tool}" == "gradle" ) 
-                            sh 'gradle build'
+                        {    
+                        sh 'gradle build'
+                        }
                         
                     }
                 }
