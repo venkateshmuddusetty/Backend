@@ -63,18 +63,19 @@ pipeline {
                          git branch
                          rm -rf deployment.yml
                          git status
-                         cp -r /opt/k8s_deploy/deployment.yml .
+                         cp -r /opt/k8s_deploy/deployment.yml /opt/
                          git status
                          cat deployment.yml
-                         sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" ${WORKSPACE}/test/deployment.yml
+                         sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" /opt/deployment.yml
+                         cp -r /opt/deployment.yml ${WORKSPACE}/test/
                          cat deployment.yml
-                         git add .
+                         git add deployment.yml
                          git commit -m "Build_number"
                          git push -u origin '''
                      } 
                 }
             }
-            stage( 'Update to AKS repo') {
+          /*  stage( 'Update to AKS repo') {
                 steps {
                     sh '''
                     set -e
@@ -93,6 +94,6 @@ pipeline {
                         sh "  git push origin HEAD:main"
                     }
                 }
-            }
+            } */
         }
 }
