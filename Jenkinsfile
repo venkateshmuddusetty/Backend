@@ -63,10 +63,9 @@ pipeline {
                          git branch
                          rm -rf deployment.yml
                          git status
-                         cp -r /opt/k8s_deploy/deployment.yml /tmp/
+                         cp -r /opt/k8s_deploy/deployment.yml ${WORKSPACE}/test/
                          git status
-                         sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" /tmp/deployment.yml
-                         cp -r /tmp/deployment.yml ${WORKSPACE}/test/deployment.yml
+                         sed -i "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" ${WORKSPACE}/test/deployment.yml
                          cat deployment.yml
                          git add deployment.yml
                          git commit -m "Build_number"
