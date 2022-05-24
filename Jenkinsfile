@@ -54,45 +54,44 @@ pipeline {
                 steps {
                         sh 'rm -rf *'
                      withCredentials([usernamePassword(credentialsId: 'test-tken-v', passwordVariable: 'password', usernameVariable: 'username')]) {
-                      sh '''  
-                      git config --global user.name "${username}"
-                      git config --global user.email "venkat149dev@gmail.com"
-                      git clone https://${password}@github.com/venkateshmuddusetty/test.git
+                      //git remote set-url origin https://venkateshmuddusetty:${password}@github.com/venkateshmuddusetty/test.git
+                         sh '''  
+                         git config --global user.name "${username}"
+                         git config --global user.email "venkat149dev@gmail.com"
+                         git clone https://${password}@github.com/venkateshmuddusetty/test.git
                          cd test/
-                         git remote set-url origin https://venkateshmuddusetty:${password}@github.com/venkateshmuddusetty/test.git
-                             cp -r /opt/k8s_deploy/deployment.yml ${WORKSPACE}/test/deployment.yml
-                            cat deployment.yml
-                            sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" deployment.yml
-                            git add .
-                            git commit -m "Build_number"
-                            git push -u origin '''
+                         git branch
+                         rm -rf deployment.yml
+                         git status
+                         cp -r /opt/k8s_deploy/deployment.yml .
+                         git status
+                         cat deployment.yml
+                         sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" deployment.yml
+                         git add .
+                         git commit -m "Build_number"
+                         git push -u origin '''
                      } 
-                    }
-               }
+                }
+            }
             stage( 'Update to AKS repo') {
                 steps {
-                        sh '''
-                            set -e
-                             cp -r /opt/k8s_deploy/deployment.yml ${WORKSPACE}/test/deployment.yml
-                            cat test/deployment.yml
-                            sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" test/deployment.yml
-                            '''
-                            
-                            withCredentials([usernamePassword(credentialsId: 'test-tken-v', passwordVariable: 'password', usernameVariable: 'username')]) {
-                                sh 'git config --global user.name "venkateshmuddusetty"'
-                                  sh 'git config --global user.email "venkat149dev@gmail.com"'
-                               sh 'git remote set-url origin https://venkateshmuddusetty:${password}@github.com/venkateshmuddusetty/test.git'
-                                sh "git add ."
-                            sh "git status"
-                            sh 'git commit -m  "adding the image"'
-                            sh 'git branch'
-    
-                            sh "  git push origin HEAD:main"
-                             }
-                            
-                      
-                      
+                    sh '''
+                    set -e
+                    cp -r /opt/k8s_deploy/deployment.yml ${WORKSPACE}/test/deployment.yml
+                    cat test/deployment.yml
+                    sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" test/deployment.yml
+                    '''                            
+                    withCredentials([usernamePassword(credentialsId: 'test-tken-v', passwordVariable: 'password', usernameVariable: 'username')]) {
+                        sh 'git config --global user.name "venkateshmuddusetty"'
+                        sh 'git config --global user.email "venkat149dev@gmail.com"'
+                        sh 'git remote set-url origin https://venkateshmuddusetty:${password}@github.com/venkateshmuddusetty/test.git'
+                        sh "git add ."
+                        sh "git status"
+                        sh 'git commit -m  "adding the image"'
+                        sh 'git branch'
+                        sh "  git push origin HEAD:main"
                     }
                 }
             }
         }
+}
