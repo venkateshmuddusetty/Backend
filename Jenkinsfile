@@ -57,9 +57,9 @@ pipeline {
                         //sh "mkdir -p $WORKSPACE/test"
                         //sh "cd $WORKSPACE/test"
                         checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], gitTool: 'Default', userRemoteConfigs: [[credentialsId: 'test-tken-v', url: 'https://github.com/venkateshmuddusetty/test.git']]])
-                      withCredentials([usernamePassword(credentialsId: 'test-tken-v', passwordVariable: 'password', usernameVariable: 'username')]) {
+                   /*   withCredentials([usernamePassword(credentialsId: 'test-tken-v', passwordVariable: 'password', usernameVariable: 'username')]) {
                       sh "  git clone https://${password}@github.com/venkateshmuddusetty/test.git"
-                     }
+                     } */
                     }
                }
             stage( 'Update to AKS repo') {
