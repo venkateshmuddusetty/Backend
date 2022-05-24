@@ -67,7 +67,7 @@ pipeline {
                         sh '''
                             set -e
                              cp -r /opt/k8s_deploy/deployment.yml ${WORKSPACE}/test/deployment.yml
-                            cat deployment.yml
+                            cat test/deployment.yml
                             sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" test/deployment.yml
                             '''
                             
