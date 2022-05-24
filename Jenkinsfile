@@ -34,17 +34,18 @@ pipeline {
             }
             stage( 'Build docker image') {
                 steps {
-                    sh "docker build -t hello:${BUILD_NUMBER} ."
+                    sh "docker build -t $registryUrl/hello:${BUILD_NUMBER} ."
                     
                 }
                 
             }
             stage('Upload Image to ACR') {
                 steps{
-                    sh '''
-                        docker login $registryUrl -u hidpdeveastusbotacr -p +EaOLpFAd9ks5vrkfWBilFcJPoBQnKgT
-                        '''
-                    sh 'docker tag  hello:latest $registryUrl/hello:${BUILD_NUMBER}'
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'docker_pass', usernameVariable: 'docker_user')]) {
+                        sh "docker login $registryUrl -u ${docker_user} -p ${docker_pass}"
+}
+                    
+                  //  sh 'docker tag  hello:latest $registryUrl/hello:${BUILD_NUMBER}'
                     sh 'docker push $registryUrl/hello:${BUILD_NUMBER}'
                     
                 }
@@ -65,9 +66,9 @@ pipeline {
                 steps {
                         sh '''
                             set -e
-                         
+                             cp -r /opt/k8s_deploy/deployment.yml ${WORKSPACE}/deployment.yml
                             cat deployment.yml
-                            sed -e "s|hidpdeveastusbotacr.azurecr.io/hello:latest|$registryUrl/hello:${BUILD_NUMBER}|g" deployment.yml
+                            sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" deployment.yml
                             '''
                             
                             withCredentials([usernamePassword(credentialsId: 'test-tken-v', passwordVariable: 'password', usernameVariable: 'username')]) {
