@@ -1,10 +1,10 @@
+properties([pipelineTriggers([githubPush()])])
 pipeline {
     agent any
     environment {
         registryUrl = "hidpdeveastusbotacr.azurecr.io"
         
         }
-    
     
     
         stages {
