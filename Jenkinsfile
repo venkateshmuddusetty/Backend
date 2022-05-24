@@ -74,7 +74,7 @@ pipeline {
                          git add deployment.yml
                          git commit -m "Build_number"
                          git push -u origin '''
-                    }
+                    
                 }
             } 
         }
