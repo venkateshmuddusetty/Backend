@@ -59,39 +59,23 @@ pipeline {
                          git config --global user.name "${username}"
                          git config --global user.email "venkat149dev@gmail.com"
                          git clone https://${password}@github.com/venkateshmuddusetty/test.git
-                         cd test/
-                         git branch
-                         rm -rf deployment.yml
-                         git status
-                         cp -r /opt/k8s_deploy/deployment.yml ${WORKSPACE}/test/
-                         git status
-                         sed -i "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" ${WORKSPACE}/test/deployment.yml
-                         cat deployment.yml
-                         git add deployment.yml
-                         git commit -m "Build_number"
-                         git push -u origin '''
+                          '''
                      } 
                 }
             }
-          /*  stage( 'Update to AKS repo') {
+            stage( 'Update to AKS repo') {
                 steps {
                     sh '''
-                    set -e
-                    cp -r /opt/k8s_deploy/deployment.yml ${WORKSPACE}/test/deployment.yml
-                    cat test/deployment.yml
-                    sed -e "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" test/deployment.yml
-                    '''                            
-                    withCredentials([usernamePassword(credentialsId: 'test-tken-v', passwordVariable: 'password', usernameVariable: 'username')]) {
-                        sh 'git config --global user.name "venkateshmuddusetty"'
-                        sh 'git config --global user.email "venkat149dev@gmail.com"'
-                        sh 'git remote set-url origin https://venkateshmuddusetty:${password}@github.com/venkateshmuddusetty/test.git'
-                        sh "git add ."
-                        sh "git status"
-                        sh 'git commit -m  "adding the image"'
-                        sh 'git branch'
-                        sh "  git push origin HEAD:main"
+                        cd test/
+                         git branch
+                         rm -rf deployment.yml
+                         cp -r /opt/k8s_deploy/deployment.yml ${WORKSPACE}/test/
+                         sed -i "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" ${WORKSPACE}/test/deployment.yml
+                         git add deployment.yml
+                         git commit -m "Build_number"
+                         git push -u origin '''
                     }
                 }
-            } */
+            } 
         }
 }
