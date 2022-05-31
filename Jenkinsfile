@@ -61,7 +61,7 @@ pipeline {
                 steps {
                         sh 'rm -rf *'
                      withCredentials([usernamePassword(credentialsId: 'test-tken-v', passwordVariable: 'password', usernameVariable: 'username')]) {
-                      //git remote set-url origin https://venkateshmuddusetty:${password}@github.com/venkateshmuddusetty/test.git
+                      // git remote set-url origin https://venkateshmuddusetty:${password}@github.com/venkateshmuddusetty/test.git
                          sh '''  
                          git config --global user.name "${username}"
                          git config --global user.email "venkat149dev@gmail.com"
@@ -76,9 +76,9 @@ pipeline {
                     sh '''
                         cd test/
                          git branch
-                         //rm -rf deployment.yml
-                         //cp -r /opt/k8s_deploy/deployment.yml ${WORKSPACE}/test/
-                         //sed -i "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" ${WORKSPACE}/test/deployment.yml
+                         //  rm -rf deployment.yml
+                         //  cp -r /opt/k8s_deploy/deployment.yml ${WORKSPACE}/test/
+                         //  sed -i "s|LATESTVERSION|$registryUrl/hello:${BUILD_NUMBER}|g" ${WORKSPACE}/test/deployment.yml
                              sed -i 's|$registryUrl/hello:*|$registryUrl/hello:${BUILD_NUMBER}|g' ${WORKSPACE}/test/deployment.yml
                          git add deployment.yml
                          git commit -m "Build_number"
