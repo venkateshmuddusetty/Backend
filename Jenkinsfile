@@ -77,7 +77,8 @@ pipeline {
                         cd test/
                          git branch
                         
-                         sed -i 's|$registryUrl/hello:*|$registryUrl/hello:${BUILD_NUMBER}|g' ./deployment.yml
+                         sed -i "s|hidpdeveastusbotacr.azurecr.io/hello:76|$registryUrl/hello:${BUILD_NUMBER}|g" ${WORKSPACE}/test/deployment.yml
+                         cat deployment.yml
                          git add deployment.yml
                          git commit -m "Build_number"
                          git push -u origin '''
