@@ -39,6 +39,17 @@ pipeline {
                 }
                 
             }
+			stage('Upload Image to ACR') {
+                steps{
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'docker_pass', usernameVariable: 'docker_user')]) {
+                        sh "docker login $registryUrl -u ${docker_user} -p ${docker_pass}"
+}
+                    
+                  //  sh 'docker tag  hello:latest $registryUrl/hello:${BUILD_NUMBER}'
+                    sh 'docker push $registryUrl/hello:${BUILD_NUMBER}'
+                    
+                }
+            }
 			}
 		}
 		
