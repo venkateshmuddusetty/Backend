@@ -32,13 +32,14 @@ pipeline {
                     }
                 }
             }
-              stage('SonarQube analysis') {
+             stage( 'Build docker image') {
                 steps {
-                    withSonarQubeEnv('sonarqube-9.0.1') {
-                    sh "mvn sonar:sonar -Dsonar.projectKey=maven-demo -Dsonar.host.url=http://20.55.51.162:9000 -Dsonar.login=75b555ac651f5a3435d141fe1387d93274af9905"
-    }
-					}
-				}
+                    sh "docker build -t $registryUrl/hello:${BUILD_NUMBER} ."
+                    
+                }
+                
+            }
 			}
 		}
 		
+	
