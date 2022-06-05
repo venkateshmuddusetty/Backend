@@ -2,7 +2,7 @@ properties([pipelineTriggers([githubPush()])])
 pipeline {
     agent any
     environment {
-        registryUrl = "hidpdeveastusbotacr.azurecr.io"
+        registryUrl = "hidptsteastus2acr.azurecr.io"
         
         }
     
