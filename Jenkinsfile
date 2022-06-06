@@ -32,21 +32,21 @@ pipeline {
                     }
                 }
             }
-	stage('SonarQube analysis') {
+              stage('SonarQube analysis') {
                 steps {
                     withSonarQubeEnv('sonarqube-9.1') {
                     sh "mvn sonar:sonar -Dsonar.projectKey=maven-demo -Dsonar.host.url=http://20.62.94.77:9000 -Dsonar.login=75b555ac651f5a3435d141fe1387d93274af9905"
     }
         }
         }
-             stage( 'Build docker image') {
+            stage( 'Build docker image') {
                 steps {
                     sh "docker build -t $registryUrl/hello:${BUILD_NUMBER} ."
                     
                 }
                 
             }
-			stage('Upload Image to ACR') {
+            stage('Upload Image to ACR') {
                 steps{
                     withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'docker_pass', usernameVariable: 'docker_user')]) {
                         sh "docker login $registryUrl -u ${docker_user} -p ${docker_pass}"
@@ -57,7 +57,7 @@ pipeline {
                     
                 }
             }
-			stage( 'Login to AKS repo') {
+            stage( 'Login to AKS repo') {
                 steps {
                         sh 'rm -rf *'
                      withCredentials([usernamePassword(credentialsId: 'test-tken-v', passwordVariable: 'password', usernameVariable: 'username')]) {
@@ -86,6 +86,4 @@ pipeline {
                 }
             } 
         }
-	}	
-		
-	
+}
