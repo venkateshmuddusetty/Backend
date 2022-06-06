@@ -34,7 +34,7 @@ pipeline {
             }
 	stage('SonarQube analysis') {
                 steps {
-                    withSonarQubeEnv('sonarqube-9.1.0') {
+                    withSonarQubeEnv('sonarqube-9.1') {
                     sh "mvn sonar:sonar -Dsonar.projectKey=maven-demo -Dsonar.host.url=http://20.62.94.77:9000 -Dsonar.login=75b555ac651f5a3435d141fe1387d93274af9905"
     }
         }
