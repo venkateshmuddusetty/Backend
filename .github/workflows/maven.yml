@@ -27,7 +27,7 @@ jobs:
     - name: Build & push Docker image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
-        image: test1
+        image: github_actions
         tags: latest
         registry: hidpdeveastusazcrvvd.azurecr.io
         dockerfile: Dockerfile
