@@ -29,8 +29,8 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-    - name: SonarQube Quality Gate check
-      uses: sonarsource/sonarqube-quality-gate-action@master
+    - name: SonarQube Quality Gate Check
+      uses: SonarSource/sonarqube-quality-gate-action@v1.0.0
     - name: Build & push Docker image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
