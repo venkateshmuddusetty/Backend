@@ -24,9 +24,6 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean install -DskipTests=True
-    - name: sonar
-      run: |
-        mvn sonar:sonar -Dsonar.projectKey=maven-demo -Dsonar.host.url=http://20.62.94.77:9000 -Dsonar.login=75b555ac651f5a3435d141fe1387d93274af9905
     - name: Build & push Docker imag
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
