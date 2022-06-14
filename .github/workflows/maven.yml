@@ -26,9 +26,8 @@ jobs:
       run: mvn clean install -DskipTests=True
     - name: SonarQube Scan
       uses: sonarsource/sonarqube-scan-action@master
+        sonar.java.binaries= **/*.java
       env:
-        sonar.projectKey: develop
-        sonar.sources: .
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
     - name: SonarQube Quality Gate Check
