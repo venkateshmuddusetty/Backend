@@ -29,16 +29,8 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        sonar.projectKey: project:testcustom
-        sonar.projectName: custom
-        sonar.projectVersion: 1.0
-        sonar.sources: .
-        sonar.language: java
-         sonar.inclusions=**/*.java
-         sonar.exclusions=**/*Test*.java,**/jalo/**,**/gensrc/**
-         sonar.java.binaries=**/classes/**
     - name: SonarQube Quality Gate Check
-      uses: SonarSource/sonarqube-quality-gate-action@v1.0.0
+      uses: sonarsource/sonarqube-quality-gate-action@master
     - name: Build & push Docker image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
